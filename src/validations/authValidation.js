@@ -1,15 +1,15 @@
-import { Joi, Segments } from 'celebrate';
+import { celebrate, Joi, Segments } from 'celebrate';
 
-export const registerUserSchema = {
+export const registerUserSchema = celebrate({
   [Segments.BODY]: Joi.object({
     email: Joi.string().email().required(),
-    password: Joi.string().min(8).max(12).required(),
+    password: Joi.string().min(8).required(),
   }),
-};
+});
 
-export const loginUserSchema = {
+export const loginUserSchema = celebrate({
   [Segments.BODY]: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
-};
+});
