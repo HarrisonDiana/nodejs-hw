@@ -1,4 +1,4 @@
-import { celebrate, Joi, Segments } from 'celebrate';
+import { Joi, Segments } from 'celebrate';
 import mongoose from 'mongoose';
 import { TAGS } from '../constants/tags.js';
 
@@ -9,24 +9,24 @@ const isValidObjectId = (value, helpers) => {
   return value;
 };
 
-export const getAllNotesSchema = celebrate({
+export const getAllNotesSchema = {
   [Segments.QUERY]: Joi.object({
     page: Joi.number().integer().min(1).default(1),
     perPage: Joi.number().integer().min(5).max(20).default(10),
     tag: Joi.string().valid(...TAGS),
     search: Joi.string().allow(''),
   }),
-});
+};
 
-export const noteIdSchema = celebrate({
+export const noteIdSchema = {
   [Segments.PARAMS]: Joi.object({
     noteId: Joi.string()
       .custom(isValidObjectId, 'ObjectId validation')
       .required(),
   }),
-});
+};
 
-export const createNoteSchema = celebrate({
+export const createNoteSchema = {
   [Segments.BODY]: Joi.object({
     title: Joi.string().min(1).required(),
     content: Joi.string().allow(''),
@@ -34,9 +34,9 @@ export const createNoteSchema = celebrate({
       .valid(...TAGS)
       .required(false),
   }),
-});
+};
 
-export const updateNoteSchema = celebrate({
+export const updateNoteSchema = {
   [Segments.PARAMS]: Joi.object({
     noteId: Joi.string()
       .custom(isValidObjectId, 'ObjectId validation')
@@ -47,4 +47,4 @@ export const updateNoteSchema = celebrate({
     content: Joi.string().allow(''),
     tag: Joi.string().valid(...TAGS),
   }).min(1),
-});
+};
