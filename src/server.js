@@ -30,9 +30,9 @@ app.use(authRoutes);
 app.use(userRoutes);
 app.use(notesRoutes);
 
-app.use(errors());
-
 app.use(notFoundHandler);
+
+app.use(errors());
 app.use(errorHandler);
 
 await connectMongoDB();
